@@ -1,79 +1,61 @@
 
 import React, { useState } from 'react';
 
-interface LoginProps {
-  onLogin: (username: string) => void;
-}
+const Login: React.FC<{ onLogin: (name: string) => void }> = ({ onLogin }) => {
+  const [user, setUser] = useState('');
+  const [pass, setPass] = useState('');
 
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simplified logic: any non-empty user/pass works for demo
-    if (username && password) {
-      onLogin(username);
-    }
+    if (user && pass) onLogin(user);
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-6">
-      <div className="max-w-md w-full">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold text-white flex items-center justify-center gap-3">
-            <span className="text-blue-500">Med</span>Log Pro
-          </h1>
-          <p className="text-slate-400 mt-2 uppercase tracking-widest text-xs font-semibold">Medical Inventory System</p>
+    <div className="min-h-screen bg-[#0f172a] flex items-center justify-center p-6 relative overflow-hidden">
+      {/* Background blobs */}
+      <div className="absolute top-0 -left-20 w-96 h-96 bg-blue-600/20 rounded-full blur-[100px]"></div>
+      <div className="absolute bottom-0 -right-20 w-96 h-96 bg-indigo-600/20 rounded-full blur-[100px]"></div>
+
+      <div className="w-full max-w-md relative z-10">
+        <div className="text-center mb-12">
+          <div className="w-16 h-16 bg-blue-600 rounded-2xl mx-auto flex items-center justify-center shadow-2xl shadow-blue-600/40 mb-6">
+             <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.628.288a2 2 0 01-1.645 0l-.628-.288a6 6 0 00-3.86-.517l-2.387.477a2 2 0 00-1.022.547V18a2 2 0 002 2h11a2 2 0 002-2v-2.572zM12 11V3.5l-2.5 1.5L7 3.5V11M12 11l2.5-1.5 2.5 1.5M12 11v8"></path></svg>
+          </div>
+          <h1 className="text-4xl font-black text-white tracking-tight">MedLog <span className="text-blue-500">Pro</span></h1>
+          <p className="text-slate-400 mt-3 font-medium uppercase tracking-[0.2em] text-[10px]">Medical Asset Management</p>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-          <div className="p-10">
-            <h2 className="text-2xl font-bold text-slate-800 mb-6">Staff Login</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-1">
-                <label className="text-sm font-semibold text-slate-700">Username</label>
-                <div className="relative">
-                  <svg className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                  <input 
-                    type="text" 
-                    required
-                    className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                    placeholder="Enter your username"
-                    value={username}
-                    onChange={e => setUsername(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-sm font-semibold text-slate-700">Password</label>
-                <div className="relative">
-                  <svg className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                  <input 
-                    type="password" 
-                    required
-                    className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <button 
-                type="submit" 
-                className="w-full py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all active:scale-[0.98]"
-              >
-                Sign In to Portal
-              </button>
-            </form>
-          </div>
-          <div className="px-10 py-6 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-             <span className="text-xs text-slate-400">© 2024 Clinical Systems</span>
-             <a href="#" className="text-xs text-blue-600 font-semibold hover:underline">Forgot Password?</a>
-          </div>
+        <div className="bg-white/10 backdrop-blur-3xl border border-white/10 p-10 rounded-[2.5rem] shadow-2xl">
+          <form onSubmit={submit} className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">ID Personel</label>
+              <input 
+                required
+                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-blue-500/50 outline-none text-white font-bold transition-all"
+                placeholder="Username"
+                value={user}
+                onChange={e => setUser(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Sandi Akses</label>
+              <input 
+                required
+                type="password"
+                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-blue-500/50 outline-none text-white font-bold transition-all"
+                placeholder="••••••••"
+                value={pass}
+                onChange={e => setPass(e.target.value)}
+              />
+            </div>
+            <button className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl hover:bg-blue-500 shadow-2xl shadow-blue-600/30 transition-all active:scale-95">
+              AUTENTIKASI SEKARANG
+            </button>
+          </form>
         </div>
+        <p className="text-center mt-10 text-slate-500 text-xs font-bold">
+          © 2024 Clinical Engineering Dept.
+        </p>
       </div>
     </div>
   );

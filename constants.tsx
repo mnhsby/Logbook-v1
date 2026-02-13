@@ -1,13 +1,12 @@
 
-import React from 'react';
-
 export const CATEGORIES = [
   'Diagnostic',
   'Life Support',
   'Treatment',
   'Monitoring',
   'Laboratory',
-  'Surgical'
+  'Surgical',
+  'Radiology'
 ];
 
 export const APP_THEME = {

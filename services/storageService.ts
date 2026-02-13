@@ -1,7 +1,6 @@
+import { MedicalDevice, DeviceStatus } from '../types';
 
-import { MedicalDevice } from '../types';
-
-const STORAGE_KEY = 'medlog_devices';
+const STORAGE_KEY = 'medlog_devices_db';
 
 export const getDevices = (): MedicalDevice[] => {
   const data = localStorage.getItem(STORAGE_KEY);
@@ -12,7 +11,7 @@ export const saveDevice = (device: MedicalDevice): void => {
   const devices = getDevices();
   const index = devices.findIndex(d => d.id === device.id);
   if (index >= 0) {
-    devices[index] = device;
+    devices[index] = { ...device };
   } else {
     devices.push(device);
   }
@@ -26,15 +25,18 @@ export const deleteDevice = (id: string): void => {
 
 export const getStats = () => {
   const devices = getDevices();
+  const now = new Date().getTime();
+  
   return {
     totalDevices: devices.length,
-    workingCount: devices.filter(d => d.status === 'Working').length,
-    repairCount: devices.filter(d => d.status === 'Under Repair' || d.status === 'Broken').length,
+    workingCount: devices.filter(d => d.status === DeviceStatus.WORKING).length,
+    repairCount: devices.filter(d => d.status === DeviceStatus.UNDER_REPAIR || d.status === DeviceStatus.BROKEN).length,
     maintenanceDue: devices.filter(d => {
-       const lastDate = new Date(d.lastMaintenanceDate);
-       const today = new Date();
-       const diff = (today.getTime() - lastDate.getTime()) / (1000 * 3600 * 24);
-       return diff > 180; // 6 months threshold
-    }).length
+       if (!d.lastMaintenanceDate) return true;
+       const lastDate = new Date(d.lastMaintenanceDate).getTime();
+       const diffDays = (now - lastDate) / (1000 * 3600 * 24);
+       return diffDays > 180; // Alert if over 6 months
+    }).length,
+    recentLogs: devices.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 5)
   };
 };

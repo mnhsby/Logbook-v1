@@ -1,8 +1,8 @@
 
 export enum DeviceStatus {
-  WORKING = 'Working',
-  UNDER_REPAIR = 'Under Repair',
-  BROKEN = 'Broken',
+  WORKING = 'Normal',
+  UNDER_REPAIR = 'Perbaikan',
+  BROKEN = 'Rusak',
   MAINTENANCE = 'Maintenance'
 }
 
@@ -25,11 +25,4 @@ export interface User {
   id: string;
   username: string;
   role: 'admin' | 'staff';
-}
-
-export interface DashboardStats {
-  totalDevices: number;
-  workingCount: number;
-  repairCount: number;
-  maintenanceDue: number;
 }

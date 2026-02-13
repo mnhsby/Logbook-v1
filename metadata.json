@@ -1,6 +1,6 @@
 {
-  "name": "Medical Device Logbook",
-  "description": "A professional medical device management system with dashboard, search, and PDF reporting.",
+  "name": "MedLog Pro - Medical Device Logbook",
+  "description": "Sistem manajemen log alat medis profesional dengan dashboard, pencarian, dan laporan PDF.",
   "requestFramePermissions": [
     "camera",
     "microphone"
