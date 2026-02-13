@@ -1,0 +1,8 @@
+{
+  "name": "MedLog Pro - Medical Device Logbook",
+  "description": "A professional medical device management system with dashboard, search, and PDF reporting.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
